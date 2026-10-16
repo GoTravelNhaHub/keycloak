@@ -67,3 +67,12 @@ git push -u origin main
 - **Backups:** paid Render Postgres has point-in-time recovery (**keycloak-db → Recovery**). For an off-Render copy, run `pg_dump` with the external URL from a machine whose IP you have temporarily added to `ipAllowList`.
 - **Scaling:** move the web service plan up first. Running more than one instance needs `KC_CACHE=ispn` and JGroups discovery, which Render doesn't provide out of the box, so stay on one bigger instance.
 - **Upgrading Keycloak:** bump the tag in `Dockerfile` (both `FROM` lines) and the compose files. Read the upgrade notes and take a manual backup before deploying. Keycloak migrates its schema on boot.
+
+## Troubleshooting
+
+| Log line | Cause | Fix |
+| --- | --- | --- |
+| `Key material not provided to setup HTTPS` / `running in an insecure context` | The image predates the built-in proxy defaults, and `KC_HTTP_ENABLED` / `KC_PROXY_HEADERS` aren't set. This usually means the service was created as a plain Docker service instead of through **New → Blueprint**. | Redeploy the current image, which sets both by default. |
+| `entrypoint: no database configured` | `DATABASE_URL` isn't set. | **keycloak → Environment → Add** `DATABASE_URL` = `keycloak-db`'s **Internal Database URL**. Also set `KC_DB_USERNAME` and `KC_DB_PASSWORD` if your password has URL-special characters. |
+| `entrypoint: WARNING KC_HOSTNAME is not set` | No public URL is configured, so the issuer follows whatever host each request uses. | Set `KC_HOSTNAME=https://auth.gotravelnha.com` (or your `onrender.com` URL), and remove `KC_HOSTNAME_STRICT` if you added it. |
+| Realm has no clients/redirects, or secrets are `${...}` | The realm placeholder env vars weren't set on the **first** boot. | Set `GTN_WEB_URL`, `FH_WEB_URL`, `GTN_WEB_CLIENT_SECRET`, `IAM_ADMIN_CLIENT_SECRET` and `SMTP_*`, then either fix the values in the admin console or recreate the database. |

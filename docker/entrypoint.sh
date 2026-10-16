@@ -14,4 +14,17 @@ if [[ -n "${DATABASE_URL:-}" && -z "${KC_DB_URL:-}" ]]; then
   export KC_DB_PASSWORD="${KC_DB_PASSWORD:-${creds#*:}}"
 fi
 
+# Fail fast with a readable message instead of a Keycloak stack trace.
+if [[ "${1:-}" == "start" ]]; then
+  if [[ -z "${KC_DB_URL:-}" ]]; then
+    echo "entrypoint: no database configured. Set DATABASE_URL (Render: link the keycloak-db" \
+         "connectionString) or KC_DB_URL." >&2
+    exit 1
+  fi
+  if [[ -z "${KC_HOSTNAME:-}" ]]; then
+    echo "entrypoint: WARNING KC_HOSTNAME is not set. Set it to the public URL, e.g." \
+         "https://auth.gotravelnha.com, so tokens get a fixed issuer." >&2
+  fi
+fi
+
 exec /opt/keycloak/bin/kc.sh "$@"
