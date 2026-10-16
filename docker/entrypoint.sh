@@ -16,9 +16,9 @@ fi
 
 # Fail fast with a readable message instead of a Keycloak stack trace.
 if [[ "${1:-}" == "start" ]]; then
-  if [[ -z "${KC_DB_URL:-}" ]]; then
-    echo "entrypoint: no database configured. Set DATABASE_URL (Render: link the keycloak-db" \
-         "connectionString) or KC_DB_URL." >&2
+  if [[ -z "${KC_DB_URL:-}" && -z "${KC_DB_URL_HOST:-}" ]]; then
+    echo "entrypoint: no database configured. Set DATABASE_URL to the Postgres Internal Database URL" \
+         "(postgresql://user:pass@host/db), or KC_DB_URL / KC_DB_URL_HOST." >&2
     exit 1
   fi
   if [[ -z "${KC_HOSTNAME:-}" ]]; then
