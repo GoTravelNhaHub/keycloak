@@ -1,0 +1,78 @@
+# Render Blueprint: Keycloak web service + Render-managed Postgres, both in Singapore
+# (next to Vercel sin1). Render dashboard → New → Blueprint → pick this repo.
+# See docs/render.md for the full walkthrough.
+
+databases:
+  - name: keycloak-db
+    region: singapore
+    plan: 0.1c-256mb          # Basic tier. Move up (e.g. 0.5c-1g) as sessions/users grow.
+    postgresMajorVersion: "17"
+    diskSizeGB: 5             # Keycloak data is small; can grow later (never shrink)
+    databaseName: keycloak
+    user: keycloak
+    ipAllowList: []           # no public access; only Render services in the same region connect
+
+services:
+  - type: web
+    name: keycloak
+    runtime: docker
+    region: singapore
+    plan: 1c-2g               # Keycloak needs ~1 GB+ heap headroom; 512 MB plans OOM or crawl.
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health/ready
+    autoDeploy: false         # deploy IAM deliberately, not on every push
+    envVars:
+      # --- Database (internal Render network, no TLS needed) ---
+      - key: DATABASE_URL
+        fromDatabase:
+          name: keycloak-db
+          property: connectionString
+      - key: KC_DB_USERNAME
+        fromDatabase:
+          name: keycloak-db
+          property: user
+      - key: KC_DB_PASSWORD
+        fromDatabase:
+          name: keycloak-db
+          property: password
+
+      # --- HTTP / proxy ---
+      - key: PORT
+        value: "8080"
+      - key: KC_HOSTNAME
+        sync: false             # e.g. https://auth.gotravelnha.com (or https://keycloak-xxxx.onrender.com at first)
+      - key: KC_HTTP_ENABLED
+        value: "true"           # Render terminates TLS
+      - key: KC_PROXY_HEADERS
+        value: xforwarded
+      - key: KC_CACHE
+        value: local            # single instance; no cluster discovery on Render
+      - key: KC_LOG_LEVEL
+        value: info
+
+      # --- First-boot master admin (change/delete after first login) ---
+      - key: KC_BOOTSTRAP_ADMIN_USERNAME
+        value: admin
+      - key: KC_BOOTSTRAP_ADMIN_PASSWORD
+        generateValue: true
+
+      # --- Realm import placeholders (read on FIRST boot only) ---
+      - key: GTN_WEB_URL
+        value: https://www.gotravelnha.com
+      - key: FH_WEB_URL
+        value: https://familyhub.app
+      - key: GTN_WEB_CLIENT_SECRET
+        generateValue: true
+      - key: IAM_ADMIN_CLIENT_SECRET
+        generateValue: true
+      - key: SMTP_HOST
+        value: smtp.resend.com
+      - key: SMTP_PORT
+        value: "465"
+      - key: SMTP_FROM
+        value: noreply@gotravelnha.com
+      - key: SMTP_USER
+        value: resend
+      - key: SMTP_PASSWORD
+        sync: false             # Resend API key

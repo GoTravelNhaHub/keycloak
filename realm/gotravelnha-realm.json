@@ -1,0 +1,306 @@
+{
+  "realm": "gotravelnha",
+  "displayName": "GoTravelNha",
+  "displayNameHtml": "<strong>GoTravelNha</strong>",
+  "enabled": true,
+  "sslRequired": "external",
+
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "editUsernameAllowed": false,
+  "verifyEmail": true,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+
+  "passwordPolicy": "length(8) and maxLength(128) and notUsername and notEmail and passwordHistory(3)",
+
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "failureFactor": 5,
+  "waitIncrementSeconds": 60,
+  "maxFailureWaitSeconds": 900,
+  "maxDeltaTimeSeconds": 43200,
+  "quickLoginCheckMilliSeconds": 1000,
+  "minimumQuickLoginWaitSeconds": 60,
+
+  "accessTokenLifespan": 300,
+  "accessTokenLifespanForImplicitFlow": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "ssoSessionIdleTimeoutRememberMe": 1209600,
+  "ssoSessionMaxLifespanRememberMe": 2592000,
+  "offlineSessionIdleTimeout": 2592000,
+  "offlineSessionMaxLifespanEnabled": true,
+  "offlineSessionMaxLifespan": 5184000,
+  "revokeRefreshToken": true,
+  "refreshTokenMaxReuse": 0,
+  "accessCodeLifespan": 60,
+  "accessCodeLifespanLogin": 1800,
+  "actionTokenGeneratedByUserLifespan": 900,
+
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en", "vi", "zh-CN"],
+  "defaultLocale": "en",
+
+  "loginTheme": "keycloak.v2",
+  "accountTheme": "keycloak.v3",
+  "emailTheme": "keycloak",
+
+  "eventsEnabled": true,
+  "eventsExpiration": 2592000,
+  "enabledEventTypes": [
+    "LOGIN", "LOGIN_ERROR", "REGISTER", "REGISTER_ERROR", "LOGOUT", "LOGOUT_ERROR",
+    "CODE_TO_TOKEN_ERROR", "REFRESH_TOKEN_ERROR", "UPDATE_PASSWORD", "RESET_PASSWORD",
+    "RESET_PASSWORD_ERROR", "VERIFY_EMAIL", "SEND_VERIFY_EMAIL", "IDENTITY_PROVIDER_LOGIN",
+    "IDENTITY_PROVIDER_FIRST_LOGIN", "DELETE_ACCOUNT", "UPDATE_EMAIL"
+  ],
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": false,
+
+  "browserSecurityHeaders": {
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "xContentTypeOptions": "nosniff",
+    "xRobotsTag": "none",
+    "xFrameOptions": "SAMEORIGIN",
+    "referrerPolicy": "no-referrer",
+    "strictTransportSecurity": "max-age=31536000; includeSubDomains"
+  },
+
+  "smtpServer": {
+    "host": "${SMTP_HOST:smtp.resend.com}",
+    "port": "${SMTP_PORT:465}",
+    "from": "${SMTP_FROM:noreply@gotravelnha.com}",
+    "fromDisplayName": "GoTravelNha",
+    "ssl": "true",
+    "starttls": "false",
+    "auth": "true",
+    "user": "${SMTP_USER:resend}",
+    "password": "${SMTP_PASSWORD:}"
+  },
+
+  "roles": {
+    "realm": [
+      { "name": "user", "description": "Signed-in customer. Granted to every new account." },
+      { "name": "admin", "description": "GoTravelNha back-office admin (maps to User.role = ADMIN)." },
+      { "name": "offline_access", "description": "${role_offline-access}" },
+      { "name": "uma_authorization", "description": "${role_uma_authorization}" },
+      {
+        "name": "default-roles-gotravelnha",
+        "description": "Roles every new user gets",
+        "composite": true,
+        "composites": {
+          "realm": ["user", "offline_access", "uma_authorization"],
+          "client": { "account": ["view-profile", "manage-account"] }
+        }
+      }
+    ]
+  },
+  "defaultRole": { "name": "default-roles-gotravelnha" },
+
+  "groups": [
+    { "name": "gotravelnha-admins", "realmRoles": ["admin"] }
+  ],
+
+  "clients": [
+    {
+      "clientId": "gotravelnha-web",
+      "name": "GoTravelNha Web (Nuxt server)",
+      "description": "Confidential client. The Nuxt server runs the code exchange and keeps tokens server-side.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${GTN_WEB_CLIENT_SECRET}",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": false,
+      "rootUrl": "${GTN_WEB_URL:http://localhost:3000}",
+      "baseUrl": "/",
+      "redirectUris": [
+        "${GTN_WEB_URL:http://localhost:3000}/auth/keycloak",
+        "http://localhost:3000/auth/keycloak"
+      ],
+      "webOrigins": ["${GTN_WEB_URL:http://localhost:3000}", "http://localhost:3000"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "${GTN_WEB_URL:http://localhost:3000}/##http://localhost:3000/",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "defaultClientScopes": ["web-origins", "acr", "basic", "profile", "roles", "email"],
+      "optionalClientScopes": ["address", "phone", "offline_access"],
+      "protocolMappers": [
+        {
+          "name": "aud-gotravelnha-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "gotravelnha-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "gotravelnha-mobile",
+      "name": "GoTravelNha Mobile (Flutter)",
+      "description": "Public client. Authorization Code + PKCE via flutter_appauth.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["com.gotravelnha.app:/oauth2redirect"],
+      "webOrigins": [],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "com.gotravelnha.app:/oauth2redirect"
+      },
+      "defaultClientScopes": ["web-origins", "acr", "basic", "profile", "roles", "email"],
+      "optionalClientScopes": ["address", "phone", "offline_access"],
+      "protocolMappers": [
+        {
+          "name": "aud-gotravelnha-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "gotravelnha-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "familyhub-web",
+      "name": "Family Hub Web (React SPA)",
+      "description": "Public SPA client. Authorization Code + PKCE.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "rootUrl": "${FH_WEB_URL:http://localhost:5173}",
+      "baseUrl": "/",
+      "redirectUris": [
+        "${FH_WEB_URL:http://localhost:5173}/auth/callback",
+        "http://localhost:5173/auth/callback"
+      ],
+      "webOrigins": ["${FH_WEB_URL:http://localhost:5173}", "http://localhost:5173"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "${FH_WEB_URL:http://localhost:5173}/##http://localhost:5173/"
+      },
+      "defaultClientScopes": ["web-origins", "acr", "basic", "profile", "roles", "email"],
+      "optionalClientScopes": ["offline_access"],
+      "protocolMappers": [
+        {
+          "name": "aud-familyhub-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "familyhub-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "familyhub-mobile",
+      "name": "Family Hub Mobile (Expo)",
+      "description": "Public client. Authorization Code + PKCE via expo-auth-session.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["com.familyhub.mobile:/oauth2redirect", "familyhub://auth/callback"],
+      "webOrigins": [],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "com.familyhub.mobile:/oauth2redirect##familyhub://auth/callback"
+      },
+      "defaultClientScopes": ["web-origins", "acr", "basic", "profile", "roles", "email"],
+      "optionalClientScopes": ["offline_access"],
+      "protocolMappers": [
+        {
+          "name": "aud-familyhub-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "familyhub-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "gotravelnha-api",
+      "name": "GoTravelNha API (resource server)",
+      "description": "Audience only. Nuxt /api checks aud contains this. No login flows.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false
+    },
+    {
+      "clientId": "familyhub-api",
+      "name": "Family Hub API (resource server)",
+      "description": "Audience only. NestJS JwtStrategy checks aud contains this. No login flows.",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false
+    },
+    {
+      "clientId": "iam-admin",
+      "name": "IAM admin (service account)",
+      "description": "Machine client for backends and scripts that create/look up users (user migration, admin pages).",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${IAM_ADMIN_CLIENT_SECRET}",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
+    }
+  ],
+
+  "users": [
+    {
+      "username": "service-account-iam-admin",
+      "enabled": true,
+      "serviceAccountClientId": "iam-admin",
+      "clientRoles": {
+        "realm-management": ["manage-users", "view-users", "query-users", "query-groups"]
+      }
+    }
+  ]
+}

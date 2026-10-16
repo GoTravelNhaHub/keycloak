@@ -1,0 +1,50 @@
+# Self-hosted production (one VM behind a TLS-terminating reverse proxy such as Caddy,
+# Nginx, Cloudflare Tunnel, or a Render/Fly load balancer).
+#   cp .env.example .env   # fill in real secrets + KC_HOSTNAME=https://auth.gotravelnha.com
+#   docker compose -f docker-compose.prod.yml up -d --build
+#
+# Using Neon instead of the bundled Postgres? Delete the keycloak-db service, drop
+# depends_on, and set KC_DB_URL to Neon's DIRECT (non-pooled) host with ?sslmode=require.
+
+services:
+  keycloak-db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${KC_DB_USERNAME:?set KC_DB_USERNAME}
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD:?set KC_DB_PASSWORD}
+    volumes:
+      - keycloak-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KC_DB_USERNAME} -d keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  keycloak:
+    build: .
+    image: gotravelnha/keycloak:26.8.1
+    restart: always
+    env_file: .env
+    environment:
+      KC_DB_URL: ${KC_DB_URL:-jdbc:postgresql://keycloak-db:5432/keycloak}
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_HOSTNAME: ${KC_HOSTNAME:?set KC_HOSTNAME, e.g. https://auth.gotravelnha.com}
+      # TLS ends at the proxy; Keycloak trusts its X-Forwarded-* headers.
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      # Single node. Switch to the default (ispn) and configure discovery when running >1 replica.
+      KC_CACHE: local
+      KC_LOG_LEVEL: ${KC_LOG_LEVEL:-info}
+    ports:
+      # Bind to localhost; only the reverse proxy should reach Keycloak.
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:9000:9000"
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+
+volumes:
+  keycloak-pgdata:
