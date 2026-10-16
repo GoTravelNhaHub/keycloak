@@ -11,7 +11,7 @@ keycloak/
 ├── render.yaml               # Render Blueprint: Keycloak + Render Postgres
 ├── .env.example              # copy to .env
 ├── realm/gotravelnha-realm.json   # realm-as-code, imported on first boot
-├── themes/                   # custom login/email themes (empty for now)
+├── themes/gotravelnha/       # brand theme: login/auth pages + account console (see themes/README.md)
 ├── scripts/
 │   ├── kcadm.sh              # kcadm inside the container, already logged in
 │   ├── create-user.sh        # verified user + password, optional --admin
@@ -93,5 +93,4 @@ Target: `https://auth.gotravelnha.com`, running the image from `Dockerfile`.
 The apps are not wired to Keycloak yet. See [`docs/integration.md`](docs/integration.md) for per-app instructions and for migrating existing users (both existing apps store bcrypt hashes).
 
 - Change the Flutter app id from `com.example.gotravelnha_app` to `com.gotravelnha.app`, or change the `gotravelnha-mobile` redirect URI to match whatever id you choose.
-- Create a branded login theme in `themes/gotravelnha/` (primary `#2563EB`) and set `loginTheme`.
 - Apple sign-in (required by App Store rules if Google sign-in is offered on iOS): add it as an identity provider.

@@ -44,8 +44,8 @@
   "supportedLocales": ["en", "vi", "zh-CN"],
   "defaultLocale": "en",
 
-  "loginTheme": "keycloak.v2",
-  "accountTheme": "keycloak.v3",
+  "loginTheme": "gotravelnha",
+  "accountTheme": "gotravelnha",
   "emailTheme": "keycloak",
 
   "eventsEnabled": true,

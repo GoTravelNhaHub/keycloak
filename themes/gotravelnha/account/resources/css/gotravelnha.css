@@ -1,0 +1,367 @@
+/*
+ * GoTravelNha account console (keycloak.v3, React + PatternFly 5). Loaded after the app's own CSS.
+ * Only PatternFly tokens and a few component overrides: the React markup is not ours to change.
+ * Colours/type mirror web/assets/css/tailwind.css and the login theme.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --gtn-teal: #008A9B;
+  --gtn-teal-hover: #007789;
+  --gtn-teal-dark: #005F6B;
+  --gtn-teal-tint: #E6F4F4;
+  --gtn-teal-ring: rgba(0, 138, 155, 0.15);
+  --gtn-ink: #101D3A;
+  --gtn-ink-2: #334155;
+  --gtn-muted: #64748B;
+  --gtn-faint: #94A3B8;
+  --gtn-line: #E2E8F0;
+  --gtn-line-hover: #CBD5E1;
+  --gtn-surface: #FFFFFF;
+  --gtn-surface-2: #F8FAFC;
+  --gtn-surface-3: #F1F5F9;
+  --gtn-radius: 12px;
+  --gtn-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --pf-v5-global--FontFamily--text: var(--gtn-font);
+  --pf-v5-global--FontFamily--heading: var(--gtn-font);
+  --pf-v5-global--FontFamily--redhatfont--text: var(--gtn-font);
+  --pf-v5-global--FontFamily--redhatfont--heading: var(--gtn-font);
+  --pf-v5-global--primary-color--100: var(--gtn-teal);
+  --pf-v5-global--primary-color--200: var(--gtn-teal-hover);
+  --pf-v5-global--primary-color--light-100: var(--gtn-teal-tint);
+  --pf-v5-global--primary-color--dark-100: var(--gtn-teal);
+  --pf-v5-global--active-color--100: var(--gtn-teal);
+  --pf-v5-global--link--Color: var(--gtn-teal-hover);
+  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
+  --pf-v5-global--link--Color--dark: var(--gtn-teal-hover);
+  --pf-v5-global--link--Color--dark--hover: var(--gtn-teal-dark);
+  --pf-v5-global--Color--100: var(--gtn-ink);
+  --pf-v5-global--Color--200: var(--gtn-muted);
+  --pf-v5-global--Color--dark-100: var(--gtn-ink);
+  --pf-v5-global--Color--dark-200: var(--gtn-muted);
+  --pf-v5-global--BorderColor--100: var(--gtn-line);
+  --pf-v5-global--BorderColor--300: var(--gtn-line);
+  --pf-v5-global--BackgroundColor--200: var(--gtn-surface-2);
+  --pf-v5-global--BorderRadius--sm: 8px;
+}
+
+body {
+  font-family: var(--gtn-font);
+  color: var(--gtn-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Loading screen before React mounts */
+.keycloak__loading-container {
+  color: var(--gtn-ink);
+}
+
+/* ---------- Header: white bar like the website, not PatternFly's black masthead ---------- */
+
+.pf-v5-c-masthead {
+  --pf-v5-c-masthead--BackgroundColor: var(--gtn-surface);
+  --pf-v5-global--Color--100: var(--gtn-ink);
+  --pf-v5-global--Color--200: var(--gtn-muted);
+  --pf-v5-global--BorderColor--100: var(--gtn-line);
+  --pf-v5-global--link--Color: var(--gtn-teal-hover);
+  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
+  --pf-v5-global--BackgroundColor--100: var(--gtn-surface);
+  --pf-v5-global--icon--Color--light: var(--gtn-muted);
+  --pf-v5-global--icon--Color--dark: var(--gtn-ink);
+  --pf-v5-c-masthead__main--before--BorderBottomColor: var(--gtn-line);
+  --pf-v5-c-masthead--item-border-color--base: var(--gtn-line);
+  --pf-v5-c-button--m-plain--Color: var(--gtn-muted);
+  --pf-v5-c-button--m-plain--hover--Color: var(--gtn-ink);
+  color: var(--gtn-ink);
+  border-bottom: 1px solid var(--gtn-line);
+}
+
+.pf-v5-c-masthead .pf-v5-c-menu-toggle {
+  --pf-v5-c-menu-toggle--Color: var(--gtn-ink);
+  --pf-v5-c-menu-toggle--hover--Color: var(--gtn-ink);
+  --pf-v5-c-menu-toggle--BackgroundColor: transparent;
+  --pf-v5-c-menu-toggle--m-plain--Color: var(--gtn-muted);
+  --pf-v5-c-menu-toggle--m-plain--hover--Color: var(--gtn-ink);
+  --pf-v5-c-menu-toggle--before--BorderTopColor: transparent;
+  --pf-v5-c-menu-toggle--before--BorderRightColor: transparent;
+  --pf-v5-c-menu-toggle--before--BorderBottomColor: transparent;
+  --pf-v5-c-menu-toggle--before--BorderLeftColor: transparent;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.pf-v5-c-masthead .pf-v5-c-menu-toggle::before,
+.pf-v5-c-masthead .pf-v5-c-menu-toggle::after {
+  border: 0;
+}
+
+.pf-v5-c-masthead .pf-v5-c-menu-toggle:hover {
+  background: var(--gtn-surface-3);
+}
+
+.pf-v5-c-masthead .pf-v5-c-avatar {
+  --pf-v5-c-avatar--BorderColor: var(--gtn-line);
+}
+
+/* ---------- Side navigation ---------- */
+
+.pf-v5-c-page__sidebar {
+  --pf-v5-c-page__sidebar--BackgroundColor: var(--gtn-surface);
+  --pf-v5-c-page__sidebar--BoxShadow: none;
+  border-right: 1px solid var(--gtn-line);
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav {
+  --pf-v5-c-nav__link--Color: var(--gtn-ink-2);
+  --pf-v5-c-nav__link--hover--Color: var(--gtn-ink);
+  --pf-v5-c-nav__link--focus--Color: var(--gtn-ink);
+  --pf-v5-c-nav__link--active--Color: var(--gtn-ink);
+  --pf-v5-c-nav__link--m-current--Color: var(--gtn-teal-dark);
+  --pf-v5-c-nav__link--BackgroundColor: transparent;
+  --pf-v5-c-nav__link--hover--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-nav__link--focus--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-nav__link--active--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-nav__link--m-current--BackgroundColor: var(--gtn-teal-tint);
+  --pf-v5-c-nav__link--before--BorderColor: transparent;
+  --pf-v5-c-nav__link--after--BorderColor: transparent;
+  --pf-v5-c-nav__link--m-current--after--BorderColor: transparent;
+  --pf-v5-c-nav__link--hover--after--BorderColor: transparent;
+  --pf-v5-c-nav__section-title--Color: var(--gtn-faint);
+  --pf-v5-c-nav__link--m-current__toggle-icon--Color: var(--gtn-teal-dark);
+  --pf-v5-c-nav__toggle-icon--Color: var(--gtn-muted);
+  --pf-v5-c-nav__subnav--before--BorderColor: transparent;
+  --pf-v5-c-nav__item--before--BorderColor: transparent;
+  padding: 12px 8px;
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link {
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link.pf-m-current::after {
+  border-color: var(--gtn-teal);
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link.pf-m-current,
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link[aria-current="page"] {
+  font-weight: 600;
+}
+
+/* ---------- Page content ---------- */
+
+.pf-v5-c-page {
+  --pf-v5-c-page--BackgroundColor: var(--gtn-surface-2);
+}
+
+.pf-v5-c-page__main-section {
+  --pf-v5-c-page__main-section--BackgroundColor: var(--gtn-surface-2);
+}
+
+.pf-v5-c-page__main-section.pf-m-light {
+  --pf-v5-c-page__main-section--m-light--BackgroundColor: var(--gtn-surface-2);
+}
+
+.pf-v5-c-page__main-section .pf-v5-c-title,
+.pf-v5-c-content h1 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--gtn-ink);
+}
+
+.pf-v5-c-content {
+  --pf-v5-c-content--Color: var(--gtn-muted);
+}
+
+.pf-v5-c-card,
+.pf-v5-c-data-list,
+.pf-v5-c-page__main-section > .pf-v5-c-form,
+.pf-v5-c-page__main-section .pf-v5-c-panel {
+  border: 1px solid var(--gtn-line);
+  border-radius: 16px;
+  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+  background: var(--gtn-surface);
+  overflow: hidden;
+}
+
+.pf-v5-c-card {
+  --pf-v5-c-card--BoxShadow: none;
+}
+
+.pf-v5-c-data-list {
+  --pf-v5-c-data-list--BorderTopColor: transparent;
+  --pf-v5-c-data-list--BorderTopWidth: 0;
+  --pf-v5-c-data-list__item--BorderBottomColor: var(--gtn-line);
+}
+
+/* ---------- Forms (personal info) — web .form-label / .form-input ---------- */
+
+.pf-v5-c-form {
+  --pf-v5-c-form--GridGap: 20px;
+}
+
+.pf-v5-c-page__main-section > .pf-v5-c-form {
+  padding: 24px;
+  max-width: 640px;
+}
+
+.pf-v5-c-form__label,
+.pf-v5-c-form__label-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gtn-ink-2);
+}
+
+.pf-v5-c-form-control {
+  --pf-v5-c-form-control--before--BorderStyle: none;
+  --pf-v5-c-form-control--after--BorderStyle: none;
+  min-height: 46px;
+  border: 1px solid var(--gtn-line);
+  border-radius: var(--gtn-radius);
+  background: var(--gtn-surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.pf-v5-c-form-control::before,
+.pf-v5-c-form-control::after {
+  display: none;
+}
+
+.pf-v5-c-form-control:hover {
+  border-color: var(--gtn-line-hover);
+}
+
+.pf-v5-c-form-control:focus-within {
+  border-color: var(--gtn-teal);
+  box-shadow: 0 0 0 4px var(--gtn-teal-ring);
+}
+
+.pf-v5-c-form-control.pf-m-error {
+  border-color: #DC2626;
+}
+
+.pf-v5-c-form-control.pf-m-readonly,
+.pf-v5-c-form-control.pf-m-disabled {
+  background: var(--gtn-surface-3);
+  color: var(--gtn-muted);
+}
+
+.pf-v5-c-form-control > :is(input, select, textarea) {
+  padding: 11px 14px;
+  font-family: var(--gtn-font);
+  font-size: 16px;
+  color: var(--gtn-ink);
+  outline: none;
+}
+
+@media (min-width: 640px) {
+  .pf-v5-c-form-control > :is(input, select, textarea) {
+    font-size: 15px;
+  }
+}
+
+/* Selects / dropdown toggles (locale picker, etc.) */
+.pf-v5-c-page__main-section .pf-v5-c-menu-toggle:not(.pf-m-plain) {
+  --pf-v5-c-menu-toggle--before--BorderTopColor: var(--gtn-line);
+  --pf-v5-c-menu-toggle--before--BorderRightColor: var(--gtn-line);
+  --pf-v5-c-menu-toggle--before--BorderBottomColor: var(--gtn-line);
+  --pf-v5-c-menu-toggle--before--BorderLeftColor: var(--gtn-line);
+  --pf-v5-c-menu-toggle--hover--before--BorderBottomColor: var(--gtn-line-hover);
+  --pf-v5-c-menu-toggle--expanded--before--BorderBottomColor: var(--gtn-teal);
+  min-height: 46px;
+  border-radius: var(--gtn-radius);
+}
+
+.pf-v5-c-page__main-section .pf-v5-c-menu-toggle:not(.pf-m-plain)::before {
+  border-radius: var(--gtn-radius);
+}
+
+.pf-v5-c-page__main-section .pf-v5-c-menu-toggle:not(.pf-m-plain)::after {
+  border-bottom-width: 0;
+}
+
+/* ---------- Buttons — web .btn-primary / .btn-secondary ----------
+   PatternFly declares these variables on .pf-v5-c-button itself, so they must be set there too. */
+
+.pf-v5-c-button {
+  --pf-v5-c-button--BorderRadius: var(--gtn-radius);
+  --pf-v5-c-button--FontWeight: 600;
+
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-teal);
+  --pf-v5-c-button--m-primary--Color: #FFFFFF;
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-teal-hover);
+
+  --pf-v5-c-button--m-secondary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--BackgroundColor: var(--gtn-surface);
+  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-line);
+  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-line-hover);
+  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-surface-3);
+
+  --pf-v5-c-button--m-tertiary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-line);
+  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-line-hover);
+
+  --pf-v5-c-button--m-link--Color: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-link--hover--Color: var(--gtn-teal-dark);
+  --pf-v5-c-button--m-link--focus--Color: var(--gtn-teal-dark);
+  --pf-v5-c-button--m-link--active--Color: var(--gtn-teal-dark);
+
+  --pf-v5-c-button--m-danger--BackgroundColor: #DC2626;
+  --pf-v5-c-button--m-danger--hover--BackgroundColor: #B91C1C;
+}
+
+.pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary, .pf-m-danger) {
+  min-height: 44px;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary, .pf-m-danger)::after {
+  border-radius: var(--gtn-radius);
+}
+
+.pf-v5-c-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--gtn-ink);
+}
+
+/* ---------- Alerts / labels ---------- */
+
+.pf-v5-c-alert {
+  --pf-v5-c-alert--BoxShadow: none;
+  border: 1px solid var(--gtn-line);
+  border-radius: var(--gtn-radius);
+}
+
+.pf-v5-c-alert.pf-m-success {
+  --pf-v5-c-alert--BackgroundColor: #ECFDF5;
+  border-color: #A7F3D0;
+}
+
+.pf-v5-c-alert.pf-m-danger {
+  --pf-v5-c-alert--BackgroundColor: #FEF2F2;
+  border-color: #FECACA;
+}
+
+.pf-v5-c-alert.pf-m-info {
+  --pf-v5-c-alert--BackgroundColor: #EFFAFB;
+  --pf-v5-c-alert--m-info__icon--Color: var(--gtn-teal);
+  --pf-v5-c-alert--m-info__title--Color: #00505A;
+  border-color: #A5E3E9;
+}
+
+.pf-v5-c-label.pf-m-blue {
+  --pf-v5-c-label--m-blue--BackgroundColor: var(--gtn-teal-tint);
+  --pf-v5-c-label--m-blue__content--Color: var(--gtn-teal-dark);
+  --pf-v5-c-label--m-blue__icon--Color: var(--gtn-teal);
+}

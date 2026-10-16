@@ -1,0 +1,755 @@
+/*
+ * GoTravelNha login theme. Loaded after PatternFly 5 and keycloak.v2's styles.css.
+ * Tokens mirror web/assets/css/tailwind.css (.form-input, .btn-primary, ...) and
+ * web/components/site/AuthShell.vue, so the Keycloak pages look like the site's own auth pages.
+ */
+
+:root {
+  --gtn-teal: #008A9B;
+  --gtn-teal-hover: #007789;
+  --gtn-teal-dark: #005F6B;
+  --gtn-teal-ring: rgba(0, 138, 155, 0.15);
+  --gtn-mint: #5EEAD4;
+  --gtn-sun: #FBBF24;
+  --gtn-ink: #101D3A;
+  --gtn-ink-2: #334155;
+  --gtn-muted: #64748B;
+  --gtn-faint: #94A3B8;
+  --gtn-line: #E2E8F0;
+  --gtn-line-hover: #CBD5E1;
+  --gtn-surface: #FFFFFF;
+  --gtn-surface-2: #F8FAFC;
+  --gtn-surface-3: #F1F5F9;
+  --gtn-radius: 12px;
+  --gtn-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* PatternFly 5 globals */
+  --pf-v5-global--FontFamily--text: var(--gtn-font);
+  --pf-v5-global--FontFamily--heading: var(--gtn-font);
+  --pf-v5-global--primary-color--100: var(--gtn-teal);
+  --pf-v5-global--primary-color--200: var(--gtn-teal-hover);
+  --pf-v5-global--link--Color: var(--gtn-teal-hover);
+  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
+  --pf-v5-global--Color--100: var(--gtn-ink);
+  --pf-v5-global--Color--200: var(--gtn-muted);
+  --pf-v5-global--BorderColor--100: var(--gtn-line);
+  --pf-v5-global--active-color--100: var(--gtn-teal);
+  --pf-v5-global--danger-color--100: #DC2626;
+}
+
+/* ---------- Page frame (AuthShell) ---------- */
+
+html.login-pf,
+html.login-pf body.gtn {
+  height: auto;
+  min-height: 100%;
+  background: var(--gtn-surface);
+}
+
+body.gtn {
+  margin: 0;
+  font-family: var(--gtn-font);
+  color: var(--gtn-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.gtn-shell {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.gtn-main {
+  display: flex;
+  overflow-x: clip;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  padding: 24px 20px;
+  min-width: 0;
+}
+
+.gtn-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gtn-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gtn-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.gtn-brand--top {
+  font-size: 16px;
+  color: var(--gtn-ink);
+}
+
+.gtn-brand--top:hover,
+.gtn-brand--top:focus {
+  color: var(--gtn-ink);
+  text-decoration: none;
+}
+
+.gtn-brand-accent {
+  color: var(--gtn-teal);
+}
+
+.gtn-logo-mark {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.gtn-back,
+.gtn-lang {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gtn-muted);
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.gtn-back:hover,
+.gtn-lang:hover {
+  background: var(--gtn-surface-3);
+  color: var(--gtn-ink);
+  text-decoration: none;
+}
+
+.gtn-back {
+  white-space: nowrap;
+}
+
+@media (max-width: 639px) {
+  .gtn-back {
+    display: none;
+  }
+}
+
+.gtn-back svg {
+  width: 14px;
+  height: 14px;
+}
+
+.gtn-lang {
+  padding: 0;
+}
+
+.gtn-lang-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.gtn-lang select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0 10px 0 32px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  field-sizing: content;
+  max-width: 180px;
+}
+
+.gtn-back:focus-visible,
+.gtn-lang select:focus-visible,
+.gtn-brand:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--gtn-teal);
+}
+
+.gtn-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.gtn-center {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+/* .gtn-card also carries pf-v5-c-login__main-body; drop PatternFly's padding for it. */
+.gtn-card,
+.gtn-card.pf-v5-c-login__main-body {
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+  margin: 0;
+}
+
+.gtn-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -0.025em;
+  color: var(--gtn-ink);
+}
+
+.gtn-description {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--gtn-muted);
+}
+
+.gtn-body {
+  margin-top: 32px;
+}
+
+.gtn-legal {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--gtn-faint);
+}
+
+.gtn-legal a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.gtn-legal a:hover {
+  color: var(--gtn-muted);
+}
+
+/* Photo panel */
+.gtn-aside {
+  display: none;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--gtn-ink);
+  background-image:
+    linear-gradient(to bottom, rgba(16, 29, 58, 0.55) 0%, rgba(16, 29, 58, 0) 22%),
+    linear-gradient(to top, #101D3A 0%, rgba(16, 29, 58, 0.55) 50%, rgba(16, 29, 58, 0.2) 100%),
+    var(--gtn-aside-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.gtn-aside-inner {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.gtn-brand--aside {
+  font-size: 18px;
+  gap: 10px;
+  color: #FFFFFF;
+}
+
+.gtn-brand--aside .gtn-brand-accent {
+  color: var(--gtn-mint);
+}
+
+.gtn-aside-copy {
+  max-width: 32rem;
+}
+
+.gtn-aside-copy h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+}
+
+.gtn-aside-copy p {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gtn-aside-copy ul {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.gtn-aside-copy li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.gtn-check {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  color: var(--gtn-mint);
+}
+
+.gtn-check svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (min-width: 640px) {
+  .gtn-main {
+    padding: 24px 40px;
+  }
+
+  .gtn-center {
+    padding: 40px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gtn-shell {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+
+  .gtn-aside {
+    display: block;
+    order: -1;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    align-self: start;
+  }
+
+  /* The photo panel already shows the logo on desktop. */
+  .gtn-brand--top {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 1280px) {
+  .gtn-aside-inner {
+    padding: 56px;
+  }
+
+  .gtn-aside-copy h2 {
+    font-size: 40px;
+  }
+}
+
+/* ---------- Forms (web .form-label / .form-input) ---------- */
+
+.gtn .pf-v5-c-form {
+  --pf-v5-c-form--GridGap: 20px;
+}
+
+.gtn .pf-v5-c-form__group-label {
+  padding-bottom: 6px;
+}
+
+.gtn .pf-v5-c-form__label,
+.gtn .pf-v5-c-form__label-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gtn-ink-2);
+}
+
+.gtn .pf-v5-c-form__label-required {
+  color: #DC2626;
+}
+
+.gtn .pf-v5-c-form-control {
+  min-height: 48px;
+  border: 1px solid var(--gtn-line);
+  border-radius: var(--gtn-radius);
+  background: var(--gtn-surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.gtn .pf-v5-c-form-control::before,
+.gtn .pf-v5-c-form-control::after {
+  display: none;
+}
+
+.gtn .pf-v5-c-form-control:hover {
+  border-color: var(--gtn-line-hover);
+}
+
+.gtn .pf-v5-c-form-control:focus-within {
+  border-color: var(--gtn-teal);
+  box-shadow: 0 0 0 4px var(--gtn-teal-ring);
+}
+
+.gtn .pf-v5-c-form-control.pf-m-error,
+.gtn .pf-v5-c-form-control:has(> [aria-invalid="true"]) {
+  border-color: #DC2626;
+}
+
+.gtn .pf-v5-c-form-control.pf-m-error:focus-within,
+.gtn .pf-v5-c-form-control:has(> [aria-invalid="true"]):focus-within {
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+}
+
+.gtn .pf-v5-c-form-control.pf-m-readonly {
+  background: var(--gtn-surface-2);
+}
+
+/* 16px on phones: iOS Safari zooms into any field with smaller text. */
+.gtn .pf-v5-c-form-control > :is(input, select, textarea) {
+  padding: 12px 14px;
+  font-family: var(--gtn-font);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--gtn-ink);
+  background: transparent;
+  border-radius: var(--gtn-radius);
+  outline: none;
+}
+
+.gtn .pf-v5-c-form-control > :is(input, textarea)::placeholder {
+  color: var(--gtn-faint);
+}
+
+@media (min-width: 640px) {
+  .gtn .pf-v5-c-form-control > :is(input, select, textarea) {
+    font-size: 15px;
+  }
+}
+
+/* Field + one trailing icon button (password show/hide, restart login): the button sits inside the field. */
+.gtn .pf-v5-c-input-group:has(> .pf-v5-c-input-group__item:nth-child(2):last-child) {
+  position: relative;
+}
+
+.gtn .pf-v5-c-input-group:has(> .pf-v5-c-input-group__item:nth-child(2):last-child) > .pf-v5-c-input-group__item:last-child {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.gtn .pf-v5-c-input-group:has(> .pf-v5-c-input-group__item:nth-child(2):last-child) .pf-v5-c-form-control > input {
+  padding-right: 52px;
+}
+
+.gtn .pf-v5-c-input-group .pf-v5-c-button.pf-m-control {
+  width: 48px;
+  height: 100%;
+  min-height: 48px;
+  border-radius: 0 var(--gtn-radius) var(--gtn-radius) 0;
+  background: transparent;
+  color: var(--gtn-muted);
+}
+
+.gtn .pf-v5-c-input-group .pf-v5-c-button.pf-m-control::after {
+  display: none;
+}
+
+.gtn .pf-v5-c-input-group .pf-v5-c-button.pf-m-control:hover {
+  color: var(--gtn-ink);
+}
+
+.gtn .pf-v5-c-input-group .pf-v5-c-button.pf-m-control:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--gtn-teal);
+}
+
+/* Error icon inside the field would collide with the show/hide button. The red border + message are enough. */
+.gtn .pf-v5-c-form-control__utilities {
+  display: none;
+}
+
+.gtn .pf-v5-c-form__helper-text,
+.gtn .pf-v5-c-helper-text {
+  font-size: 13px;
+}
+
+.gtn .pf-v5-c-helper-text__item.pf-m-error,
+.gtn .kc-feedback-text.pf-m-error {
+  color: #B91C1C;
+}
+
+/* "Remember me" + "Forgot password?" row under the password field */
+.gtn .pf-v5-c-form__helper-text .pf-v5-c-helper-text {
+  align-items: center;
+  margin-top: 12px;
+}
+
+.gtn .pf-v5-c-check {
+  align-items: center;
+  gap: 10px;
+}
+
+.gtn .pf-v5-c-check__input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--gtn-teal);
+}
+
+.gtn .pf-v5-c-check__label {
+  font-size: 14px;
+  color: var(--gtn-ink-2);
+}
+
+.gtn a {
+  color: var(--gtn-teal-hover);
+  font-weight: 600;
+  text-underline-offset: 2px;
+  text-decoration: none;
+}
+
+.gtn a:hover {
+  color: var(--gtn-teal-dark);
+  text-decoration: underline;
+}
+
+/* ---------- Buttons (web .btn-primary / .btn-secondary) ----------
+   PatternFly declares these variables on .pf-v5-c-button itself, so they must be set there too. */
+
+.gtn .pf-v5-c-button {
+  --pf-v5-c-button--BorderRadius: var(--gtn-radius);
+  --pf-v5-c-button--FontWeight: 600;
+  --pf-v5-c-button--FontSize: 15px;
+
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-teal);
+  --pf-v5-c-button--m-primary--Color: #FFFFFF;
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-teal-hover);
+
+  --pf-v5-c-button--m-secondary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--BackgroundColor: var(--gtn-surface);
+  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-line);
+  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-line-hover);
+  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-surface-3);
+
+  --pf-v5-c-button--m-tertiary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--BackgroundColor: var(--gtn-surface);
+  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-line);
+  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--hover--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-line-hover);
+  --pf-v5-c-button--m-tertiary--focus--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--focus--BackgroundColor: var(--gtn-surface-2);
+  --pf-v5-c-button--m-tertiary--active--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--active--BackgroundColor: var(--gtn-surface-3);
+
+  --pf-v5-c-button--m-link--Color: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-link--hover--Color: var(--gtn-teal-dark);
+}
+
+.gtn .pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary) {
+  min-height: 48px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.gtn .pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary)::after {
+  border-radius: var(--gtn-radius);
+}
+
+.gtn .pf-v5-c-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--gtn-ink);
+}
+
+.gtn .pf-v5-c-button:disabled,
+.gtn .pf-v5-c-button.pf-m-disabled,
+.gtn .pf-v5-c-button.pf-m-aria-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gtn .pf-v5-c-form__actions {
+  margin-top: 4px;
+}
+
+/* Two buttons side by side (e.g. "Back to sign in" + "Submit") stack on phones. */
+.gtn .pf-v5-c-form__actions > * {
+  flex: 1 1 100%;
+}
+
+/* ---------- Social sign-in + divider (web .btn-secondary / .form-divider) ---------- */
+
+.gtn .gtn-social-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gtn .gtn-social-item + .gtn-social-item {
+  margin-top: 8px;
+}
+
+.gtn .gtn-social-button {
+  width: 100%;
+  gap: 12px;
+}
+
+.gtn #kc-social-providers img {
+  width: 20px;
+  height: 20px;
+}
+
+.gtn .kc-login-divider {
+  margin: 24px 0;
+  gap: 12px;
+  --pf-v5-global--Color--200: var(--gtn-faint);
+  --pf-v5-global--FontSize--sm: 12px;
+}
+
+.gtn .kc-login-divider span {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gtn .kc-login-divider::before,
+.gtn .kc-login-divider::after {
+  border-bottom-color: var(--gtn-line);
+}
+
+/* ---------- Alerts (web .alert-error / .alert-success) ---------- */
+
+.gtn .pf-v5-c-alert {
+  --pf-v5-c-alert--BoxShadow: none;
+  --pf-v5-c-alert--BorderTopWidth: 0;
+  --pf-v5-c-alert__title--Color: currentColor;
+  --pf-v5-c-alert__icon--Color: currentColor;
+  grid-template-columns: max-content 1fr;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid;
+  border-radius: var(--gtn-radius);
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+.gtn .pf-v5-c-alert__icon {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.gtn .pf-v5-c-alert__title {
+  font-weight: 500;
+}
+
+.gtn .pf-v5-c-alert.pf-m-danger {
+  border-color: #FECACA;
+  background: #FEF2F2;
+  color: #991B1B;
+}
+
+.gtn .pf-v5-c-alert.pf-m-success {
+  border-color: #A7F3D0;
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.gtn .pf-v5-c-alert.pf-m-warning {
+  border-color: #FDE68A;
+  background: #FFFBEB;
+  color: #92400E;
+}
+
+.gtn .pf-v5-c-alert.pf-m-info {
+  border-color: #A5E3E9;
+  background: #EFFAFB;
+  color: #00505A;
+}
+
+/* ---------- "New to GoTravelNha? Create an account" ---------- */
+
+.gtn .gtn-info {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--gtn-muted);
+}
+
+.gtn .gtn-info p,
+.gtn #kc-info-wrapper > * {
+  margin: 0;
+}
+
+/* Info/error pages and verify-email text */
+.gtn .gtn-body > p,
+.gtn #kc-content-wrapper p,
+.gtn .instruction {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--gtn-ink-2);
+}
+
+/* Reset password: the subtitle already says what the old bottom instruction said. */
+body[data-page-id="login-login-reset-password"] #kc-info {
+  display: none;
+}
+
+/* "* Required fields" above long forms */
+.gtn .subtitle,
+.gtn .subtitle .pf-v5-c-helper-text__item-text {
+  font-size: 13px;
+  color: var(--gtn-muted);
+}
+
+.gtn .pf-v5-u-mb-md-on-md {
+  margin-bottom: 16px;
+}
+
+/* Registration password-policy checklist */
+.gtn #kc-form-register .pf-v5-c-helper-text__item {
+  font-size: 13px;
+}

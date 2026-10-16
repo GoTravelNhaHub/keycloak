@@ -1,0 +1,7 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <!-- GoTravelNha: map pin with a house inside. Keep in sync with components/Logo.vue -->
+  <rect width="48" height="48" rx="13" fill="#008A9B"/>
+  <path d="M24 39.5c-7-7.4-10.5-12.7-10.5-17.3a10.5 10.5 0 0 1 21 0c0 4.6-3.5 9.9-10.5 17.3Z" fill="#FFFFFF"/>
+  <path d="M18.8 23 24 18.4l5.2 4.6v5.5H18.8Z" fill="#008A9B"/>
+  <circle cx="35.5" cy="12.5" r="3.2" fill="#FBBF24"/>
+</svg>
