@@ -11,7 +11,10 @@ cd "$(dirname "$0")"
 ARGS=(-s alias=google -s providerId=google -s enabled=true -s displayName=Google
   -s trustEmail=true -s firstBrokerLoginFlowAlias="first broker login"
   -s "config.clientId=$GOOGLE_CLIENT_ID" -s "config.clientSecret=$GOOGLE_CLIENT_SECRET"
-  -s config.defaultScope="openid profile email" -s config.syncMode=IMPORT)
+  -s config.defaultScope="openid profile email" -s config.syncMode=IMPORT
+  # Own prompt, so Keycloak doesn't forward the app's: the register link sends prompt=create,
+  # which Google rejects ("Invalid prompt: create", Error 400 invalid_request)
+  -s config.prompt=select_account)
 
 if ./kcadm.sh get identity-provider/instances/google -r gotravelnha >/dev/null 2>&1; then
   ./kcadm.sh update identity-provider/instances/google -r gotravelnha "${ARGS[@]}"
