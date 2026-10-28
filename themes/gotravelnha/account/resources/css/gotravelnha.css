@@ -6,12 +6,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --gtn-teal: #008A9B;
-  --gtn-teal-hover: #007789;
-  --gtn-teal-dark: #005F6B;
-  --gtn-teal-tint: #E6F4F4;
-  --gtn-teal-ring: rgba(0, 138, 155, 0.15);
-  --gtn-ink: #101D3A;
+  --gtn-primary: #0066E4;
+  --gtn-primary-hover: #0057C8;
+  --gtn-active: #0642D2;
+  --gtn-brand: #0055D9;
+  --gtn-soft: #EAF2FC;
+  --gtn-ring: rgba(0, 102, 228, 0.15);
+  --gtn-button-line: #CFE0F7;
+  --gtn-button-hover-bg: #F5F9FF;
+  --gtn-button-shadow: 0 6px 14px -6px rgba(0, 102, 228, 0.55);
+  --gtn-ink: #0A1024;
   --gtn-ink-2: #334155;
   --gtn-muted: #64748B;
   --gtn-faint: #94A3B8;
@@ -21,21 +25,22 @@
   --gtn-surface-2: #F8FAFC;
   --gtn-surface-3: #F1F5F9;
   --gtn-radius: 12px;
+  --gtn-radius-button: 999px;
   --gtn-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --pf-v5-global--FontFamily--text: var(--gtn-font);
   --pf-v5-global--FontFamily--heading: var(--gtn-font);
   --pf-v5-global--FontFamily--redhatfont--text: var(--gtn-font);
   --pf-v5-global--FontFamily--redhatfont--heading: var(--gtn-font);
-  --pf-v5-global--primary-color--100: var(--gtn-teal);
-  --pf-v5-global--primary-color--200: var(--gtn-teal-hover);
-  --pf-v5-global--primary-color--light-100: var(--gtn-teal-tint);
-  --pf-v5-global--primary-color--dark-100: var(--gtn-teal);
-  --pf-v5-global--active-color--100: var(--gtn-teal);
-  --pf-v5-global--link--Color: var(--gtn-teal-hover);
-  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
-  --pf-v5-global--link--Color--dark: var(--gtn-teal-hover);
-  --pf-v5-global--link--Color--dark--hover: var(--gtn-teal-dark);
+  --pf-v5-global--primary-color--100: var(--gtn-primary);
+  --pf-v5-global--primary-color--200: var(--gtn-primary-hover);
+  --pf-v5-global--primary-color--light-100: var(--gtn-soft);
+  --pf-v5-global--primary-color--dark-100: var(--gtn-primary);
+  --pf-v5-global--active-color--100: var(--gtn-primary);
+  --pf-v5-global--link--Color: var(--gtn-active);
+  --pf-v5-global--link--Color--hover: var(--gtn-primary-hover);
+  --pf-v5-global--link--Color--dark: var(--gtn-active);
+  --pf-v5-global--link--Color--dark--hover: var(--gtn-primary-hover);
   --pf-v5-global--Color--100: var(--gtn-ink);
   --pf-v5-global--Color--200: var(--gtn-muted);
   --pf-v5-global--Color--dark-100: var(--gtn-ink);
@@ -64,8 +69,8 @@ body {
   --pf-v5-global--Color--100: var(--gtn-ink);
   --pf-v5-global--Color--200: var(--gtn-muted);
   --pf-v5-global--BorderColor--100: var(--gtn-line);
-  --pf-v5-global--link--Color: var(--gtn-teal-hover);
-  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
+  --pf-v5-global--link--Color: var(--gtn-active);
+  --pf-v5-global--link--Color--hover: var(--gtn-primary-hover);
   --pf-v5-global--BackgroundColor--100: var(--gtn-surface);
   --pf-v5-global--icon--Color--light: var(--gtn-muted);
   --pf-v5-global--icon--Color--dark: var(--gtn-ink);
@@ -117,18 +122,18 @@ body {
   --pf-v5-c-nav__link--hover--Color: var(--gtn-ink);
   --pf-v5-c-nav__link--focus--Color: var(--gtn-ink);
   --pf-v5-c-nav__link--active--Color: var(--gtn-ink);
-  --pf-v5-c-nav__link--m-current--Color: var(--gtn-teal-dark);
+  --pf-v5-c-nav__link--m-current--Color: var(--gtn-active);
   --pf-v5-c-nav__link--BackgroundColor: transparent;
   --pf-v5-c-nav__link--hover--BackgroundColor: var(--gtn-surface-3);
   --pf-v5-c-nav__link--focus--BackgroundColor: var(--gtn-surface-3);
   --pf-v5-c-nav__link--active--BackgroundColor: var(--gtn-surface-3);
-  --pf-v5-c-nav__link--m-current--BackgroundColor: var(--gtn-teal-tint);
+  --pf-v5-c-nav__link--m-current--BackgroundColor: var(--gtn-soft);
   --pf-v5-c-nav__link--before--BorderColor: transparent;
   --pf-v5-c-nav__link--after--BorderColor: transparent;
   --pf-v5-c-nav__link--m-current--after--BorderColor: transparent;
   --pf-v5-c-nav__link--hover--after--BorderColor: transparent;
   --pf-v5-c-nav__section-title--Color: var(--gtn-faint);
-  --pf-v5-c-nav__link--m-current__toggle-icon--Color: var(--gtn-teal-dark);
+  --pf-v5-c-nav__link--m-current__toggle-icon--Color: var(--gtn-active);
   --pf-v5-c-nav__toggle-icon--Color: var(--gtn-muted);
   --pf-v5-c-nav__subnav--before--BorderColor: transparent;
   --pf-v5-c-nav__item--before--BorderColor: transparent;
@@ -142,7 +147,7 @@ body {
 }
 
 .pf-v5-c-page__sidebar .pf-v5-c-nav__link.pf-m-current::after {
-  border-color: var(--gtn-teal);
+  border-color: var(--gtn-primary);
 }
 
 .pf-v5-c-page__sidebar .pf-v5-c-nav__link.pf-m-current,
@@ -234,8 +239,8 @@ body {
 }
 
 .pf-v5-c-form-control:focus-within {
-  border-color: var(--gtn-teal);
-  box-shadow: 0 0 0 4px var(--gtn-teal-ring);
+  border-color: var(--gtn-primary);
+  box-shadow: 0 0 0 4px var(--gtn-ring);
 }
 
 .pf-v5-c-form-control.pf-m-error {
@@ -269,7 +274,7 @@ body {
   --pf-v5-c-menu-toggle--before--BorderBottomColor: var(--gtn-line);
   --pf-v5-c-menu-toggle--before--BorderLeftColor: var(--gtn-line);
   --pf-v5-c-menu-toggle--hover--before--BorderBottomColor: var(--gtn-line-hover);
-  --pf-v5-c-menu-toggle--expanded--before--BorderBottomColor: var(--gtn-teal);
+  --pf-v5-c-menu-toggle--expanded--before--BorderBottomColor: var(--gtn-primary);
   min-height: 46px;
   border-radius: var(--gtn-radius);
 }
@@ -286,35 +291,35 @@ body {
    PatternFly declares these variables on .pf-v5-c-button itself, so they must be set there too. */
 
 .pf-v5-c-button {
-  --pf-v5-c-button--BorderRadius: var(--gtn-radius);
+  --pf-v5-c-button--BorderRadius: var(--gtn-radius-button);
   --pf-v5-c-button--FontWeight: 600;
 
-  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-teal);
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-primary);
   --pf-v5-c-button--m-primary--Color: #FFFFFF;
-  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-primary-hover);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-primary-hover);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-primary-hover);
 
-  --pf-v5-c-button--m-secondary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--Color: var(--gtn-active);
   --pf-v5-c-button--m-secondary--BackgroundColor: var(--gtn-surface);
-  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-line);
-  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-line-hover);
-  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-button-line);
+  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-primary);
+  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-button-hover-bg);
 
-  --pf-v5-c-button--m-tertiary--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-line);
-  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-line-hover);
+  --pf-v5-c-button--m-tertiary--Color: var(--gtn-active);
+  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-button-line);
+  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-active);
+  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-primary);
 
-  --pf-v5-c-button--m-link--Color: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-link--hover--Color: var(--gtn-teal-dark);
-  --pf-v5-c-button--m-link--focus--Color: var(--gtn-teal-dark);
-  --pf-v5-c-button--m-link--active--Color: var(--gtn-teal-dark);
+  --pf-v5-c-button--m-link--Color: var(--gtn-active);
+  --pf-v5-c-button--m-link--hover--Color: var(--gtn-primary-hover);
+  --pf-v5-c-button--m-link--focus--Color: var(--gtn-active);
+  --pf-v5-c-button--m-link--active--Color: var(--gtn-active);
 
   --pf-v5-c-button--m-danger--BackgroundColor: #DC2626;
   --pf-v5-c-button--m-danger--hover--BackgroundColor: #B91C1C;
@@ -327,7 +332,11 @@ body {
 }
 
 .pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary, .pf-m-danger)::after {
-  border-radius: var(--gtn-radius);
+  border-radius: var(--gtn-radius-button);
+}
+
+.pf-v5-c-button.pf-m-primary {
+  box-shadow: var(--gtn-button-shadow);
 }
 
 .pf-v5-c-button:focus-visible {
@@ -354,14 +363,14 @@ body {
 }
 
 .pf-v5-c-alert.pf-m-info {
-  --pf-v5-c-alert--BackgroundColor: #EFFAFB;
-  --pf-v5-c-alert--m-info__icon--Color: var(--gtn-teal);
-  --pf-v5-c-alert--m-info__title--Color: #00505A;
-  border-color: #A5E3E9;
+  --pf-v5-c-alert--BackgroundColor: #F2F7FF;
+  --pf-v5-c-alert--m-info__icon--Color: var(--gtn-primary);
+  --pf-v5-c-alert--m-info__title--Color: #0B3580;
+  border-color: #C9DEFB;
 }
 
 .pf-v5-c-label.pf-m-blue {
-  --pf-v5-c-label--m-blue--BackgroundColor: var(--gtn-teal-tint);
-  --pf-v5-c-label--m-blue__content--Color: var(--gtn-teal-dark);
-  --pf-v5-c-label--m-blue__icon--Color: var(--gtn-teal);
+  --pf-v5-c-label--m-blue--BackgroundColor: var(--gtn-soft);
+  --pf-v5-c-label--m-blue__content--Color: var(--gtn-active);
+  --pf-v5-c-label--m-blue__icon--Color: var(--gtn-primary);
 }

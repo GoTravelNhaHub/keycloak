@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 40" width="188" height="40" role="img" aria-label="GoTravelNha">
   <!-- Mark: same paths as web/components/Logo.vue, scaled to 40px. -->
   <g transform="scale(0.8333)">
-    <rect width="48" height="48" rx="13" fill="#008A9B"/>
+    <rect width="48" height="48" rx="13" fill="#0066E4"/>
     <path d="M24 39.5c-7-7.4-10.5-12.7-10.5-17.3a10.5 10.5 0 0 1 21 0c0 4.6-3.5 9.9-10.5 17.3Z" fill="#FFFFFF"/>
-    <path d="M18.8 23 24 18.4l5.2 4.6v5.5H18.8Z" fill="#008A9B"/>
+    <path d="M18.8 23 24 18.4l5.2 4.6v5.5H18.8Z" fill="#0066E4"/>
     <circle cx="35.5" cy="12.5" r="3.2" fill="#FBBF24"/>
   </g>
   <!-- An <img> can't use web fonts, so textLength pins the width whatever system font renders it. -->
   <text x="50" y="27.5" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
         font-size="21" font-weight="700" letter-spacing="-0.4" textLength="136" lengthAdjust="spacingAndGlyphs"
-        fill="#101D3A">GoTravel<tspan fill="#008A9B">Nha</tspan></text>
+        fill="#0055D9">GoTravelNha</text>
 </svg>

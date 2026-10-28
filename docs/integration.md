@@ -6,23 +6,18 @@ Discovery: `<issuer>/.well-known/openid-configuration`. JWKS: `<issuer>/protocol
 
 Every app uses Authorization Code + PKCE (S256). The user's stable id is the token's `sub` (a UUID). Store it on your local user row (for example a new `keycloakId`/`keycloak_id` column, unique) and look users up by it, not by email.
 
-## 1. GoTravelNha web (Nuxt, `web/`), client `gotravelnha-web`
+## 1. GoTravelNha web, admin and API, client `gotravelnha-web`
 
-The Nuxt server is a confidential client. It does the code exchange and keeps tokens out of the browser.
+GoTravelNha runs as three apps: `web/` (www.gotravelnha.com), `admin/` (admin.gotravelnha.com) and `backend/` (api.gotravelnha.com). The **API** is the confidential client. It runs the code exchange and keeps tokens out of the browser. www and admin never talk to Keycloak directly.
 
-- Library: `nuxt-auth-utils`, which has a built-in Keycloak OAuth provider and a sealed-cookie session that uses the existing `SESSION_PASSWORD`.
-- Env:
-  ```
-  NUXT_OAUTH_KEYCLOAK_SERVER_URL=http://localhost:8080
-  NUXT_OAUTH_KEYCLOAK_REALM=gotravelnha
-  NUXT_OAUTH_KEYCLOAK_CLIENT_ID=gotravelnha-web
-  NUXT_OAUTH_KEYCLOAK_CLIENT_SECRET=<GTN_WEB_CLIENT_SECRET>
-  NUXT_OAUTH_KEYCLOAK_REDIRECT_URL=http://localhost:3000/auth/keycloak
-  ```
-- Route `server/routes/auth/keycloak.get.ts` → `defineOAuthKeycloakEventHandler({ onSuccess })`. In `onSuccess`, upsert `User` by `sub` (set `role = ADMIN` when `realm_access.roles` contains `admin`), then call `setUserSession`.
-- Logout: clear the session, then redirect to `<issuer>/protocol/openid-connect/logout?client_id=gotravelnha-web&post_logout_redirect_uri=http://localhost:3000/`.
-- **Mobile calls the same `/api`.** For requests that carry `Authorization: Bearer`, verify the JWT with `jose` (`createRemoteJWKSet(<JWKS>)`, `jwtVerify(token, jwks, { issuer, audience: 'gotravelnha-api' })`). Put that check in a server util and apply it to `/api/user/**` and `/api/admin/**`. Today those routes are not consistently authenticated (see `web/CLAUDE.md`).
-- `register.vue`, `forgot-password.vue`, and `reset-password.vue` become redirects to Keycloak: registration via `<issuer>/protocol/openid-connect/registrations?...`, password reset from the login page. Move the existing Google OAuth (`server/api/auth/google/`) into Keycloak with `scripts/setup-google-idp.sh`.
+- Login: the frontends send the browser to `https://api.gotravelnha.com/auth/login?redirect=<www or admin URL>` (`&register=1` opens the Keycloak registration page). The API redirects to Keycloak with PKCE. Keycloak returns to `https://api.gotravelnha.com/auth/callback`, which upserts `User` by `sub` (`keycloakId`), sets `role` from the `admin` realm role, sets the sealed `gotravelnha_session` cookie on `.gotravelnha.com`, and redirects back.
+- www and admin call the API with `credentials: 'include'`. The API allows only its own frontends through CORS (`CORS_ORIGINS`).
+- Logout: `https://api.gotravelnha.com/auth/logout?redirect=<www or admin URL>` clears the cookie and ends the Keycloak session (`id_token_hint`).
+- Mobile sends `Authorization: Bearer <access token>` to the same API. The API verifies it with the realm JWKS, `audience: 'gotravelnha-api'`.
+- Admin user management and checkout account setup go through the `iam-admin` service account (create user, `execute-actions-email` UPDATE_PASSWORD, `gotravelnha-admins` group).
+- Live realm: run `scripts/configure-subdomains.sh` once to set the redirect and post-logout URIs (the realm JSON is only read on first import).
+- Backend env: `OIDC_ISSUER`, `OIDC_CLIENT_ID=gotravelnha-web`, `OIDC_CLIENT_SECRET=<GTN_WEB_CLIENT_SECRET>`, `KEYCLOAK_ADMIN_CLIENT_SECRET=<IAM_ADMIN_CLIENT_SECRET>`, `SESSION_COOKIE_DOMAIN=.gotravelnha.com`. See `backend/.env.example`.
+- Existing users: `npm run users:migrate-to-keycloak` in `backend/` (dry run first, then `--apply`, then `--apply --send-emails`).
 
 ## 2. GoTravelNha mobile (Flutter, `mobile/`), client `gotravelnha-mobile`
 

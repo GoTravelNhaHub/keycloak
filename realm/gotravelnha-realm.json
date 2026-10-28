@@ -106,8 +106,8 @@
   "clients": [
     {
       "clientId": "gotravelnha-web",
-      "name": "GoTravelNha Web (Nuxt server)",
-      "description": "Confidential client. The Nuxt server runs the code exchange and keeps tokens server-side.",
+      "name": "GoTravelNha (api.gotravelnha.com)",
+      "description": "Confidential client. The API (backend/) runs the code exchange at /auth/callback and keeps tokens server-side; www and admin share its session cookie.",
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": false,
@@ -121,13 +121,13 @@
       "rootUrl": "${GTN_WEB_URL:http://localhost:3000}",
       "baseUrl": "/",
       "redirectUris": [
-        "${GTN_WEB_URL:http://localhost:3000}/auth/keycloak",
-        "http://localhost:3000/auth/keycloak"
+        "${GTN_API_URL:http://localhost:3002}/auth/callback",
+        "http://localhost:3002/auth/callback"
       ],
-      "webOrigins": ["${GTN_WEB_URL:http://localhost:3000}", "http://localhost:3000"],
+      "webOrigins": ["${GTN_API_URL:http://localhost:3002}", "http://localhost:3002"],
       "attributes": {
         "pkce.code.challenge.method": "S256",
-        "post.logout.redirect.uris": "${GTN_WEB_URL:http://localhost:3000}/##http://localhost:3000/",
+        "post.logout.redirect.uris": "${GTN_WEB_URL:http://localhost:3000}/*##${GTN_ADMIN_URL:http://localhost:3001}/*##http://localhost:3000/*##http://localhost:3001/*",
         "backchannel.logout.session.required": "true",
         "backchannel.logout.revoke.offline.tokens": "false"
       },

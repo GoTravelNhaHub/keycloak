@@ -5,13 +5,18 @@
  */
 
 :root {
-  --gtn-teal: #008A9B;
-  --gtn-teal-hover: #007789;
-  --gtn-teal-dark: #005F6B;
-  --gtn-teal-ring: rgba(0, 138, 155, 0.15);
-  --gtn-mint: #5EEAD4;
+  --gtn-primary: #0066E4;
+  --gtn-primary-hover: #0057C8;
+  --gtn-active: #0642D2;
+  --gtn-brand: #0055D9;
+  --gtn-soft: #EAF2FC;
+  --gtn-ring: rgba(0, 102, 228, 0.15);
+  --gtn-button-line: #CFE0F7;
+  --gtn-button-hover-bg: #F5F9FF;
+  --gtn-button-shadow: 0 6px 14px -6px rgba(0, 102, 228, 0.55);
+  --gtn-sky: #7DB4FF;
   --gtn-sun: #FBBF24;
-  --gtn-ink: #101D3A;
+  --gtn-ink: #0A1024;
   --gtn-ink-2: #334155;
   --gtn-muted: #64748B;
   --gtn-faint: #94A3B8;
@@ -21,19 +26,20 @@
   --gtn-surface-2: #F8FAFC;
   --gtn-surface-3: #F1F5F9;
   --gtn-radius: 12px;
+  --gtn-radius-button: 999px;
   --gtn-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* PatternFly 5 globals */
   --pf-v5-global--FontFamily--text: var(--gtn-font);
   --pf-v5-global--FontFamily--heading: var(--gtn-font);
-  --pf-v5-global--primary-color--100: var(--gtn-teal);
-  --pf-v5-global--primary-color--200: var(--gtn-teal-hover);
-  --pf-v5-global--link--Color: var(--gtn-teal-hover);
-  --pf-v5-global--link--Color--hover: var(--gtn-teal-dark);
+  --pf-v5-global--primary-color--100: var(--gtn-primary);
+  --pf-v5-global--primary-color--200: var(--gtn-primary-hover);
+  --pf-v5-global--link--Color: var(--gtn-active);
+  --pf-v5-global--link--Color--hover: var(--gtn-primary-hover);
   --pf-v5-global--Color--100: var(--gtn-ink);
   --pf-v5-global--Color--200: var(--gtn-muted);
   --pf-v5-global--BorderColor--100: var(--gtn-line);
-  --pf-v5-global--active-color--100: var(--gtn-teal);
+  --pf-v5-global--active-color--100: var(--gtn-primary);
   --pf-v5-global--danger-color--100: #DC2626;
 }
 
@@ -93,17 +99,13 @@ body.gtn {
 
 .gtn-brand--top {
   font-size: 16px;
-  color: var(--gtn-ink);
+  color: var(--gtn-brand);
 }
 
 .gtn-brand--top:hover,
 .gtn-brand--top:focus {
-  color: var(--gtn-ink);
+  color: var(--gtn-brand);
   text-decoration: none;
-}
-
-.gtn-brand-accent {
-  color: var(--gtn-teal);
 }
 
 .gtn-logo-mark {
@@ -180,7 +182,7 @@ body.gtn {
 .gtn-lang select:focus-visible,
 .gtn-brand:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--gtn-teal);
+  box-shadow: 0 0 0 2px var(--gtn-primary);
 }
 
 .gtn-visually-hidden {
@@ -254,8 +256,8 @@ body.gtn {
   overflow: hidden;
   background-color: var(--gtn-ink);
   background-image:
-    linear-gradient(to bottom, rgba(16, 29, 58, 0.55) 0%, rgba(16, 29, 58, 0) 22%),
-    linear-gradient(to top, #101D3A 0%, rgba(16, 29, 58, 0.55) 50%, rgba(16, 29, 58, 0.2) 100%),
+    linear-gradient(to bottom, rgba(10, 16, 36, 0.55) 0%, rgba(10, 16, 36, 0) 22%),
+    linear-gradient(to top, #0A1024 0%, rgba(10, 16, 36, 0.55) 50%, rgba(10, 16, 36, 0.2) 100%),
     var(--gtn-aside-image);
   background-size: cover;
   background-position: center;
@@ -274,10 +276,6 @@ body.gtn {
   font-size: 18px;
   gap: 10px;
   color: #FFFFFF;
-}
-
-.gtn-brand--aside .gtn-brand-accent {
-  color: var(--gtn-mint);
 }
 
 .gtn-aside-copy {
@@ -327,7 +325,7 @@ body.gtn {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  color: var(--gtn-mint);
+  color: var(--gtn-sky);
 }
 
 .gtn-check svg {
@@ -415,8 +413,8 @@ body.gtn {
 }
 
 .gtn .pf-v5-c-form-control:focus-within {
-  border-color: var(--gtn-teal);
-  box-shadow: 0 0 0 4px var(--gtn-teal-ring);
+  border-color: var(--gtn-primary);
+  box-shadow: 0 0 0 4px var(--gtn-ring);
 }
 
 .gtn .pf-v5-c-form-control.pf-m-error,
@@ -491,7 +489,7 @@ body.gtn {
 
 .gtn .pf-v5-c-input-group .pf-v5-c-button.pf-m-control:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 2px var(--gtn-teal);
+  box-shadow: inset 0 0 0 2px var(--gtn-primary);
 }
 
 /* Error icon inside the field would collide with the show/hide button. The red border + message are enough. */
@@ -524,7 +522,7 @@ body.gtn {
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: var(--gtn-teal);
+  accent-color: var(--gtn-primary);
 }
 
 .gtn .pf-v5-c-check__label {
@@ -533,55 +531,75 @@ body.gtn {
 }
 
 .gtn a {
-  color: var(--gtn-teal-hover);
+  color: var(--gtn-active);
   font-weight: 600;
   text-underline-offset: 2px;
   text-decoration: none;
 }
 
 .gtn a:hover {
-  color: var(--gtn-teal-dark);
+  color: var(--gtn-primary-hover);
   text-decoration: underline;
+}
+
+/* Header and footer links stay grey, as on the site; the rules above would make them blue. */
+.gtn a.gtn-back {
+  color: var(--gtn-muted);
+}
+
+.gtn a.gtn-back:hover {
+  color: var(--gtn-ink);
+  text-decoration: none;
+}
+
+.gtn .gtn-legal a {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.gtn .gtn-legal a:hover {
+  color: var(--gtn-muted);
+  text-decoration: none;
 }
 
 /* ---------- Buttons (web .btn-primary / .btn-secondary) ----------
    PatternFly declares these variables on .pf-v5-c-button itself, so they must be set there too. */
 
 .gtn .pf-v5-c-button {
-  --pf-v5-c-button--BorderRadius: var(--gtn-radius);
+  --pf-v5-c-button--BorderRadius: var(--gtn-radius-button);
   --pf-v5-c-button--FontWeight: 600;
   --pf-v5-c-button--FontSize: 15px;
 
-  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-teal);
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--gtn-primary);
   --pf-v5-c-button--m-primary--Color: #FFFFFF;
-  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-teal-hover);
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--gtn-primary-hover);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--gtn-primary-hover);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--gtn-primary-hover);
 
-  --pf-v5-c-button--m-secondary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-secondary--Color: var(--gtn-active);
   --pf-v5-c-button--m-secondary--BackgroundColor: var(--gtn-surface);
-  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-line);
-  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-line-hover);
-  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-button--m-secondary--after--BorderColor: var(--gtn-button-line);
+  --pf-v5-c-button--m-secondary--hover--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--hover--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-secondary--hover--after--BorderColor: var(--gtn-primary);
+  --pf-v5-c-button--m-secondary--focus--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--focus--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-secondary--active--Color: var(--gtn-active);
+  --pf-v5-c-button--m-secondary--active--BackgroundColor: var(--gtn-button-hover-bg);
 
-  --pf-v5-c-button--m-tertiary--Color: var(--gtn-ink);
+  --pf-v5-c-button--m-tertiary--Color: var(--gtn-active);
   --pf-v5-c-button--m-tertiary--BackgroundColor: var(--gtn-surface);
-  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-line);
-  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-tertiary--hover--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-line-hover);
-  --pf-v5-c-button--m-tertiary--focus--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-tertiary--focus--BackgroundColor: var(--gtn-surface-2);
-  --pf-v5-c-button--m-tertiary--active--Color: var(--gtn-ink);
-  --pf-v5-c-button--m-tertiary--active--BackgroundColor: var(--gtn-surface-3);
+  --pf-v5-c-button--m-tertiary--after--BorderColor: var(--gtn-button-line);
+  --pf-v5-c-button--m-tertiary--hover--Color: var(--gtn-active);
+  --pf-v5-c-button--m-tertiary--hover--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-tertiary--hover--after--BorderColor: var(--gtn-primary);
+  --pf-v5-c-button--m-tertiary--focus--Color: var(--gtn-active);
+  --pf-v5-c-button--m-tertiary--focus--BackgroundColor: var(--gtn-button-hover-bg);
+  --pf-v5-c-button--m-tertiary--active--Color: var(--gtn-active);
+  --pf-v5-c-button--m-tertiary--active--BackgroundColor: var(--gtn-button-hover-bg);
 
-  --pf-v5-c-button--m-link--Color: var(--gtn-teal-hover);
-  --pf-v5-c-button--m-link--hover--Color: var(--gtn-teal-dark);
+  --pf-v5-c-button--m-link--Color: var(--gtn-active);
+  --pf-v5-c-button--m-link--hover--Color: var(--gtn-primary-hover);
 }
 
 .gtn .pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary) {
@@ -595,7 +613,11 @@ body.gtn {
 }
 
 .gtn .pf-v5-c-button:is(.pf-m-primary, .pf-m-secondary, .pf-m-tertiary)::after {
-  border-radius: var(--gtn-radius);
+  border-radius: var(--gtn-radius-button);
+}
+
+.gtn .pf-v5-c-button.pf-m-primary {
+  box-shadow: var(--gtn-button-shadow);
 }
 
 .gtn .pf-v5-c-button:focus-visible {
@@ -705,9 +727,9 @@ body.gtn {
 }
 
 .gtn .pf-v5-c-alert.pf-m-info {
-  border-color: #A5E3E9;
-  background: #EFFAFB;
-  color: #00505A;
+  border-color: #C9DEFB;
+  background: #F2F7FF;
+  color: #0B3580;
 }
 
 /* ---------- "New to GoTravelNha? Create an account" ---------- */

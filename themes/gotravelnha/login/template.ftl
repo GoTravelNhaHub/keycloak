@@ -37,9 +37,9 @@
 
 <#macro logoMark size=30>
   <svg width="${size}" height="${size}" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="gtn-logo-mark">
-    <rect width="48" height="48" rx="13" fill="#008A9B"/>
+    <rect width="48" height="48" rx="13" fill="#0066E4"/>
     <path d="M24 39.5c-7-7.4-10.5-12.7-10.5-17.3a10.5 10.5 0 0 1 21 0c0 4.6-3.5 9.9-10.5 17.3Z" fill="#FFFFFF"/>
-    <path d="M18.8 23 24 18.4l5.2 4.6v5.5H18.8Z" fill="#008A9B"/>
+    <path d="M18.8 23 24 18.4l5.2 4.6v5.5H18.8Z" fill="#0066E4"/>
     <circle cx="35.5" cy="12.5" r="3.2" fill="#FBBF24"/>
   </svg>
 </#macro>
@@ -77,7 +77,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="color-scheme" content="light${darkMode?then(' dark', '')}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#008A9B">
+    <meta name="theme-color" content="#0066E4">
 
     <#if properties.meta?has_content>
         <#list properties.meta?split(' ') as meta>
@@ -201,7 +201,7 @@
     <div class="gtn-topbar">
       <a href="${backUrl?has_content?then(backUrl, siteUrl)}" class="gtn-brand gtn-brand--top">
         <@logoMark size=30 />
-        <span>GoTravel<span class="gtn-brand-accent">Nha</span></span>
+        <span>GoTravelNha</span>
       </a>
       <div class="gtn-topbar-actions">
         <#if realm.internationalizationEnabled && locale.supported?size gt 1>
@@ -332,7 +332,7 @@
     <div class="gtn-aside-inner">
       <span class="gtn-brand gtn-brand--aside">
         <@logoMark size=34 />
-        <span>GoTravel<span class="gtn-brand-accent">Nha</span></span>
+        <span>GoTravelNha</span>
       </span>
       <div class="gtn-aside-copy">
         <h2>${gtnMsg("gtnHeadline")}</h2>

@@ -60,6 +60,10 @@ services:
       # --- Realm import placeholders (read on FIRST boot only) ---
       - key: GTN_WEB_URL
         value: https://www.gotravelnha.com
+      - key: GTN_API_URL
+        value: https://api.gotravelnha.com
+      - key: GTN_ADMIN_URL
+        value: https://admin.gotravelnha.com
       - key: FH_WEB_URL
         value: https://familyhub.app
       - key: GTN_WEB_CLIENT_SECRET
