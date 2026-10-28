@@ -355,6 +355,7 @@
     </div>
   </aside>
 </div>
+<script src="${url.resourcesPath}/js/gtn-submit.js"></script>
 </body>
 </html>
 </#macro>

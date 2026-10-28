@@ -47,7 +47,7 @@ Reset everything: `docker compose down -v` (this deletes the Keycloak database).
 
 ## What the realm configures
 
-**Login:** self-registration on, email is the username, email verification required, password reset, remember-me. Passwords need at least 8 characters, cannot equal the email or username, and cannot repeat the last 3. Brute-force lockout starts after 5 failures and backs off up to 15 minutes. UI languages are `en`, `vi`, and `zh-CN`, the same three the apps support.
+**Login:** self-registration on (signs the user straight in: no email verification, no default required actions), email is the username, password reset, remember-me. Passwords need at least 8 characters, cannot equal the email or username, and cannot repeat the last 3. Brute-force lockout starts after 5 failures and backs off up to 15 minutes. UI languages are `en`, `vi`, and `zh-CN`, the same three the apps support.
 
 **Tokens:** access tokens last 5 minutes. A browser SSO session ends after 30 minutes idle or 10 hours total (14 days idle and 30 days total with remember-me). Mobile offline sessions (`offline_access` scope) end after 30 days idle or 60 days total. Refresh tokens rotate and each can be used once.
 

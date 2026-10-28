@@ -10,7 +10,7 @@
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
   "editUsernameAllowed": false,
-  "verifyEmail": true,
+  "verifyEmail": false,
   "resetPasswordAllowed": true,
   "rememberMe": true,
 

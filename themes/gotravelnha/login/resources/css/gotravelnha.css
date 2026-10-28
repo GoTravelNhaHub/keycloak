@@ -625,6 +625,38 @@ body.gtn {
   box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--gtn-ink);
 }
 
+/* Submitted: spinner in the button, no further clicks (resources/js/gtn-submit.js) */
+.gtn .pf-v5-c-button[aria-disabled="true"] {
+  pointer-events: none;
+}
+
+.gtn .pf-v5-c-button.gtn-busy {
+  cursor: progress;
+}
+
+.gtn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: gtn-spin 0.7s linear infinite;
+}
+
+@keyframes gtn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gtn-spinner {
+    animation-duration: 1.6s;
+  }
+}
+
 .gtn .pf-v5-c-button:disabled,
 .gtn .pf-v5-c-button.pf-m-disabled,
 .gtn .pf-v5-c-button.pf-m-aria-disabled {
