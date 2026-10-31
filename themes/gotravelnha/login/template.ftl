@@ -69,6 +69,8 @@
 <#macro registrationLayout bodyClass="" displayInfo=false displayMessage=true displayRequiredFields=false>
 <#assign siteUrl = properties.gtnSiteUrl!"https://www.gotravelnha.com">
 <#assign backUrl = (client?? && client.baseUrl?has_content)?then(client.baseUrl, "")>
+<#-- The native apps show these pages as part of the app: no logo or back link, and the app sets the language with ui_locales. -->
+<#assign inMobileApp = client?? && client.clientId == "gotravelnha-mobile">
 <!DOCTYPE html>
 <html class="${properties.kcHtmlClass!}" lang="${lang}"<#if realm.internationalizationEnabled> dir="${(locale.rtl)?then('rtl','ltr')}"</#if>>
 
@@ -198,6 +200,7 @@
 
   <#-- Form panel -->
   <main class="gtn-main">
+    <#if !inMobileApp>
     <div class="gtn-topbar">
       <a href="${backUrl?has_content?then(backUrl, siteUrl)}" class="gtn-brand gtn-brand--top">
         <@logoMark size=30 />
@@ -228,6 +231,7 @@
         </#if>
       </div>
     </div>
+    </#if>
 
     <div class="gtn-center">
       <div class="gtn-card ${properties.kcLoginMainBody!}">
